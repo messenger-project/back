@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ChatGateway } from './chat/chat.gateway';
-import { UserService } from './user/user.service';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,14 +15,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'mahan',
       password: 'mahan',
       database: 'mydb02',
-      entities: ['src/**/*.entity.ts'],
-      migrations: ['src/migrations/*.ts'],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      migrations: [__dirname + '/migrations/*{.ts,.js}'],
       autoLoadEntities: true,
       synchronize: false,
     }),
     UserModule,
+    AuthModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, ChatGateway, UserService],
+  controllers: [AppController],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}
