@@ -5,8 +5,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: '*', // فقط برای توسعه! برای production حتماً دامنه دقیق بذار
-    credentials: true,
+    origin: '*',
+    methods: ['GET', 'POST'],
   });
 
   await app.listen(process.env.PORT ?? 9060, '0.0.0.0');
